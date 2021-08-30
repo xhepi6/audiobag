@@ -1,3 +1,8 @@
+# project related
+audio_in
+audio_out
+model_dir
+
 .idea
 */.idea
 
