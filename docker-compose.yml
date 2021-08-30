@@ -1,0 +1,6 @@
+spleeter:
+  build: .
+  volumes:
+    - ./audio_in:/input
+    - ./audio_out:/output
+    - ./model_dir:/model
