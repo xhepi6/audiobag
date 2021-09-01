@@ -1,4 +1,5 @@
-#TODO: Make sure docker is installed
-#TODO: Make sure for ffmpeg
-#TODO: install requirements
-## SET LOADING IN MEANTIME
+import os
+
+if __name__ == "__main__":
+    os.system("pip install -r requirements.txt")
+    os.system("docker-compose build")
