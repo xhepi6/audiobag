@@ -19,6 +19,9 @@ def search(search_keyword: str):
 
 @app.command()
 def download_from_file():
+    """
+    Write links in links.txt file
+    """
     with open("links.txt", "r") as links_file:
         for line in links_file:
             yt.download(line.replace("\n", ""))
@@ -44,5 +47,3 @@ def split_all():
     for file_name in to_do:
         os.system(f"docker run -v {BASE}\\audio_out:/output -v {BASE}\\audio_in:/input nda_spleeter"
                   f" separate -o /output -p spleeter:5stems \"/input/{file_name}\"")
-
-

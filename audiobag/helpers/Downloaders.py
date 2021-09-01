@@ -4,6 +4,12 @@ import re
 from bs4 import BeautifulSoup
 
 class YoutubeDownloader:
+    """
+    Model to adjust wanted youtube download.
+
+    command example: youtube-dl --extract-audio --audio-format mp3 --output "/audio_in/%(uploader)s%(title)s1234.%(ext)s" {youtube_link}
+    """
+
     ydl_opts = {
     'format': 'bestaudio/best',
     'postprocessors': [{
@@ -12,9 +18,11 @@ class YoutubeDownloader:
         'preferredquality': '192',
         }],
     }
+
     video_link = "https://www.youtube.com/watch?v="
     search_link = "https://www.youtube.com/results?search_query="
 
+    # TODO: Define the return type 
     def search(self, search_keyword: str):
         html = urllib.request.urlopen(self.search_link + search_keyword)
         video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
@@ -24,11 +32,11 @@ class YoutubeDownloader:
 
         index = int(input("Number to download, 0 to exit: "))
         if index in range(1, len(result_links)+1):
-            self.download(result_links[index - 1])
+            return True if self.download(result_links[index - 1]) else False
         else:
-            return 0
+            return False
 
-    def download(self, link):
+    def download(self, link) -> None:
         try:
             os.system(f'youtube-dl --extract-audio --audio-format mp3 --output '
                     f'"./audio_in/%(uploader)s%(title)s1234.%(ext)s" {link}')
@@ -36,7 +44,7 @@ class YoutubeDownloader:
         except Exception:
             return False
 
-    def download_from_file(self):
+    def download_from_file(self) -> None:
         with open("links.txt", "r") as links_file:
             for line in links_file:
                 self.download(line.replace("\n", ""))
