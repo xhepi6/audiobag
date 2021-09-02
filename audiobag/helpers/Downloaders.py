@@ -3,6 +3,7 @@ import urllib.request
 import re
 from bs4 import BeautifulSoup
 
+
 class YoutubeDownloader:
     """
     Model to adjust wanted youtube download.
@@ -11,11 +12,11 @@ class YoutubeDownloader:
     """
 
     ydl_opts = {
-    'format': 'bestaudio/best',
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
         }],
     }
 
@@ -31,15 +32,15 @@ class YoutubeDownloader:
             print(f"{result_links.index(link) + 1}  {self.title_from_video(link)} {link}")
 
         index = int(input("Number to download, 0 to exit: "))
-        if index in range(1, len(result_links)+1):
+        if index in range(1, len(result_links) + 1):
             return True if self.download(result_links[index - 1]) else False
         else:
             return False
 
-    def download(self, link) -> None:
+    def download(self, link) -> bool:
         try:
             os.system(f'youtube-dl --extract-audio --audio-format mp3 --output '
-                    f'"./audio_in/%(uploader)s%(title)s1234.%(ext)s" {link}')
+                      f'"./audio_in/{input("File name: ")}.%(ext)s" {link}')
             return True
         except Exception:
             return False
